@@ -3,10 +3,10 @@ import styles from '../../styles/Feed.module.css';
 import { Toolbar } from '../../components/toolbar';
 import { useRouter } from 'next/router';
 export const Feed = ({pageNumber , articles}) => {
-    console.log(articles)
+
     const router = useRouter();
     return (
-        <div className='pageContainer'>
+        <div className='page-container'>
             <Toolbar/>
         <div className={styles.main}>
             {articles.map((article,index)=>(
