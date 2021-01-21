@@ -5,18 +5,29 @@ import path from 'path'
 import matter from 'gray-matter'
 
 const Blog  = ({posts}) => {
+   
+        const RealData = posts.map((posts) => matter(posts))
+        
+        console.log(RealData)
 
-        const RealData = posts.map((data) => matter(data))
-       
+        const ListItems = RealData.map(( listItem ) => 
+            
+            listItem.data
+          
+        )
+        console.log(ListItems)
+
+     
+        
         return (
             <div className='page-container'>
                 <Toolbar/>
                 <div className={styles.main}>
-                    {RealData.map((article,index)=>(
+                    {ListItems.map((article,index)=>(
                         <div key={index} className={styles.post}>
-                            <h1>{RealData.[index].data.title}</h1>
-                            <p>{RealData.[index].data.description}</p>
-                            {!!RealData.[index].data.image && <img src={RealData.[index].data.image} />}
+                             <h1>{article.title}</h1>
+                             <p>{article.description}</p>
+                            {!!article.image && <img src={article.image} />}
                         </div>
                     ))}
                 </div>
