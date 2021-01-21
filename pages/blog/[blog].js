@@ -30,7 +30,7 @@ DetailBlog.getInitialProps = async (context) => {
     const { blog } = context.query;
     // Import our .md file using the `slug` from the URL
     
-    const content = await import(`../../pages/posts/habitat-protection-restoration-and-management.md`);
+    const content = await import(`../../pages/posts/${blog}.md`);
     console.log(content)
     // console.log(content)
     const data = matter(content.default);
