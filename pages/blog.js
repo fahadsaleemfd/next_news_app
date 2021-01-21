@@ -4,21 +4,13 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 
-const Blog  = ({posts}) => {
-   
-        const RealData = posts.map((posts) => matter(posts))
+const Blog  = ({data}) => {
         
-        console.log(RealData)
-
-        const ListItems = RealData.map(( listItem ) => 
-            
-            listItem.data
-          
-        )
+        
+        const RealData = data.map((blog) => matter(blog))
+        const ListItems = RealData.map((listItem) => listItem.data)
         console.log(ListItems)
-
-     
-        
+  
         return (
             <div className='page-container'>
                 <Toolbar/>
@@ -39,35 +31,28 @@ const Blog  = ({posts}) => {
 
 
   export async function getStaticProps() {
-    
-    const postsDirectory = path.join(process.cwd(), 'pages/posts')
-    const filenames = fs.readdirSync(postsDirectory)
-    const posts = filenames.map((filename) => {
-        const filePath = path.join(postsDirectory, filename)
-        const fileContents = fs.readFileSync(filePath, 'utf8')
-    
-        // Generally you would parse/transform the contents
-        // For example you can transform markdown to HTML here
-    
-        return {
-          filename,
-          content: fileContents,
-        }
-      })
 
-     return {
-    props: {
-      posts,
-    },
-  }
-    // Get external data from the file system, API, DB, etc.
-    // const data = ...
-  
-    // // The value of the `props` key will be
-    // //  passed to the `Home` component
-    // return {
-    //   props: ...
-    // }
+      const fs = require("fs");
+      const files = fs.readdirSync(`${process.cwd()}/pages/posts`, "utf-8");
+      const blogs = files.filter((fn) => fn.endsWith(".md"));
+      console.log(blogs)
+
+      const data = blogs.map((blog) => {
+        const path = `${process.cwd()}/pages/posts/${blog}`;
+        const rawContent = fs.readFileSync(path, {
+          encoding: "utf-8",
+        });
+
+        return rawContent;
+      });
+
+      return {
+        props: {
+          data:data
+        },
+      };
+
+
   }
 
   export default Blog
