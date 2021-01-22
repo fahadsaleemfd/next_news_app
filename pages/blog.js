@@ -33,7 +33,7 @@ const Blog  = ({data , pagination}) => {
                 
                 
                 
-                <div className={styles.disabled}><Link href="#" >Previous</Link></div>
+                <div><Link href="#" >Previous</Link></div>
                
                 <Link href="#">
                       <div>#{pagination.current}

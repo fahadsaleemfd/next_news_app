@@ -68,7 +68,7 @@ const Blog  = ({page,data,pagination}) => {
                   </div>
 
 
-                  <div className = {pagination.current === pagination.pages ? styles.buttonDisplay :styles.buttonDisplayNone}>
+                  <div className = {pagination.current === pagination.pages ?  styles.buttonDisplay :styles.buttonDisplayNone}>
                     <Link href={`/${pagination.current}`}>
                       Next
                       </Link>
