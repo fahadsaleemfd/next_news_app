@@ -2,11 +2,14 @@ import {Toolbar} from '../components/toolbar'
 import styles from '../styles/Feed.module.css';
 import matter from 'gray-matter'
 import Link from "next/link";
+import { Router } from 'next/router';
+import { useRouter } from 'next/router';
 var slugify = require('slugify')
 
 
-const Blog  = ({data}) => {
-        
+const Blog  = ({data , pagination}) => {
+        const router = useRouter()
+        console.log(pagination)
         const RealData = data.map((blog) => matter(blog))
         const ListItems = RealData.map((listItem) => listItem.data)
        
@@ -26,6 +29,26 @@ const Blog  = ({data}) => {
                     ))}
                 </div>
 
+                <div className={styles.paginator}>
+                
+                
+                
+                <div className={styles.disabled}><Link href="#" >Previous</Link></div>
+               
+                <Link href="#">
+                      <div>#{pagination.current}
+                      </div>                
+                </Link>
+
+                <div><Link  href={`/${pagination.current+1}`}>Next</Link></div>
+
+                     
+
+            
+
+        </div>
+                
+
         
         </div>
     )
@@ -33,28 +56,45 @@ const Blog  = ({data}) => {
 
 
   export async function getStaticProps() {
+    
+      const pageSizes = 2
 
       const fs = require("fs");
       const files = fs.readdirSync(`${process.cwd()}/pages/posts`, "utf-8");
       const blogs = files.filter((fn) => fn.endsWith(".md"));
+      const pages = Math.ceil(Number(blogs.length)/Number(pageSizes))
+      console.log(pages)
 
-      const data = blogs.map((blog) => {
+      const pagination = {
+        current: 1,
+        pages: pages
+      };
+
+
+
+      const data = blogs.slice(0,Number(pageSizes)).map((blog) => {
       const path = `${process.cwd()}/pages/posts/${blog}`;
       const rawContent = fs.readFileSync(path, {
           encoding: "utf-8",
       });
 
         return rawContent;
+
       });
 
       return {
         props: {
-          data:data
+          data:data,
+          pagination
+          
         },
       };
 
 
   }
+
+  
+  
 
  
 
