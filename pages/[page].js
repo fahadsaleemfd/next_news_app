@@ -87,7 +87,7 @@ const Blog  = ({page,data,pagination}) => {
   export async function getStaticProps({ params }) {
  
       const page = parseInt(params.page)
-      const pageSize = 2
+      const pageSize = 5
 
       const fs = require("fs");
       const files = fs.readdirSync(`${process.cwd()}/pages/posts`, "utf-8");
